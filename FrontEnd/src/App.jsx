@@ -1,17 +1,62 @@
+/* eslint-disable no-unused-vars */
 
-import ProductList from "./features/Product-list/ProductList"
-import Home from "./Pages/Home"
+import CartPage from "./Pages/CartPage";
+import CheckOut from "./Pages/CheckOut";
+import Home from "./Pages/Home";
+import LogInPage from "./Pages/LogInPage";
+import SignUpPage from "./Pages/SignUpPage";
+import ProductDetailPage from "./Pages/ProductDetailPage";
+import LayOut from "./features/Navbar/LayOut";
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LayOut />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: <LogInPage />,
+      },
+      {
+        path: "signin",
+        element: <SignUpPage />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
+      },
+      {
+        path: "checkout",
+        element: <CheckOut />,
+      },
+      {
+        path: "product-details",
+        element: <ProductDetailPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  
-
   return (
-  <div>
-    <Home>
-      
-    </Home>
-  </div>
-  )
+    // <div>
+    //   <SignUpPage>
+
+    //   </SignUpPage>
+    // </div>
+    <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;
