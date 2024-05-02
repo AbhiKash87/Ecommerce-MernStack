@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllProduct, fetchProductByFilter ,fetchProductBySort} from "./productAPI";
+import { fetchAllProduct, fetchProductByFilter } from "./productAPI";
 
 const initialState = {
   products: [],
@@ -15,18 +15,21 @@ export const fetchAllProductAsync = createAsyncThunk(
 );
 export const fetchProductByFilterAsync = createAsyncThunk(
   "product/fetchProductByFilter",
-  async (filter) => {
-    const response = await fetchProductByFilter(filter);
+  async ({filter,sortOption,pagination}) => {
+    // console.log("sortOption in fetchProductByFilterAsync",sortOption);
+    // console.log("filter in fetchProductByFilterAsync",filter);
+    // console.log("pagination in fetchProductByFilterAsync",pagination);
+    const response = await fetchProductByFilter({filter,sortOption,pagination});
     return response.data;
   }
 );
-export const fetchProductBySortAsync = createAsyncThunk(
-  "product/fetchProductBySort",
-  async (option) => {
-    const response = await fetchProductBySort(option);
-    return response.data;
-  }
-);
+// export const fetchProductBySortAsync = createAsyncThunk(
+//   "product/fetchProductBySort",
+//   async (option) => {
+//     const response = await fetchProductBySort(option);
+//     return response.data;
+//   }
+// );
 
 export const productSlice = createSlice({
   name: "product",
@@ -52,13 +55,13 @@ export const productSlice = createSlice({
         state.status = "idle";
         state.products = action.payload;
       })
-      .addCase(fetchProductBySortAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchProductBySortAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.products = action.payload;
-      })
+      // .addCase(fetchProductBySortAsync.pending, (state) => {
+      //   state.status = "loading";
+      // })
+      // .addCase(fetchProductBySortAsync.fulfilled, (state, action) => {
+      //   state.status = "idle";
+      //   state.products = action.payload;
+      // })
   },
 });
 
