@@ -2,18 +2,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import {
-//   increment,
-//   incrementAsync,
-//   selectCount,
-// } from './counterSlice';
+import {useForm} from 'react-hook-form'
+
 
 
 
 
 function LogIn() {
- // const count = useSelector(selectCount);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const {register,handleSubmit,watch,formState:{errors} } = useForm();
     return (
       <>
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -37,7 +34,8 @@ function LogIn() {
                 <div className="mt-2">
                   <input
                     id="email"
-                    name="email"
+                    // name="email"
+                    {...register("email")}
                     type="email"
                     autoComplete="email"
                     required
@@ -60,7 +58,8 @@ function LogIn() {
                 <div className="mt-2">
                   <input
                     id="password"
-                    name="password"
+                    // name="password"
+                    {...register("password")}
                     type="password"
                     autoComplete="current-password"
                     required

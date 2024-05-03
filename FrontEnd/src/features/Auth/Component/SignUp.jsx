@@ -2,18 +2,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import {
-//   increment,
-//   incrementAsync,
-//   selectCount,
-// } from './counterSlice';
+import { useForm } from 'react-hook-form';
+import { createUserAsync } from '../AuthSlice';
 
 
 
 
 function SignUp() {
- // const count = useSelector(selectCount);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const {register,handleSubmit,watch,formState:{errors} } = useForm();
+    const user = useSelector((state) => state.user.loggedINUser);
     return (
       <>
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -29,15 +27,20 @@ function SignUp() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit((data)=>{
+              dispatch(createUserAsync({email:data.email,password:data.password}))
+              
+            })}>
               <div>
+                {user?(user.email):("not submmited")}
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>
                 <div className="mt-2">
                   <input
                     id="email"
-                    name="email"
+                    // name="email"
+                    {...register("email")}
                     type="email"
                     autoComplete="email"
                     required
@@ -56,7 +59,8 @@ function SignUp() {
                 <div className="mt-2">
                   <input
                     id="password"
-                    name="password"
+                    // name="password"
+                    {...register("password")}
                     type="password"
                     autoComplete="current-password"
                     required
@@ -73,7 +77,8 @@ function SignUp() {
                 <div className="mt-2">
                   <input
                     id="confirm-password"
-                    name="confirm-password"
+                    // name="confirm-password"
+                    {...register("confirm-password")}
                     type="password"
                    
                     required
