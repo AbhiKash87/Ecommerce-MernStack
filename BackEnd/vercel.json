@@ -82,12 +82,9 @@
             "src":"/webhook/(.*)",
             "dest":"index.js"
         },
+       
         {
-            "src":"/",
-            "dest":"dist/index.html"
-        },
-        {
-            "src":"/(.*)",
+            "src":"*",
             "dest":"dist/index.html"
         }
       
