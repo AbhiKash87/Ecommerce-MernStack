@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createUserAsync } from '../AuthSlice';
+import { signUpAsync } from '../AuthSlice';
 
 
 
@@ -11,9 +11,10 @@ import { createUserAsync } from '../AuthSlice';
 function SignUp() {
     const dispatch = useDispatch();
     const {register,handleSubmit,watch,formState:{errors} } = useForm();
-    const user = useSelector((state) => state.user.loggedINUser);
+    const loggedINUserToken = useSelector((state)=>state.auth.loggedINUserToken)
     return (
       <>
+          {loggedINUserToken && <Navigate to='/'></Navigate>}
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -28,11 +29,17 @@ function SignUp() {
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" onSubmit={handleSubmit((data)=>{
-              dispatch(createUserAsync({email:data.email,password:data.password}))
+              dispatch(signUpAsync({
+                email:data.email,
+                password:data.password,
+                addresses:[],
+                role:'user'
+                // this role can be directly given on backend
+              }))
               
             })}>
               <div>
-                {user?(user.email):("not submmited")}
+                {/* {user?(user.email):("not submmited")} */}
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>

@@ -1,0 +1,10 @@
+mongodump --uri "mongodb://localhost:27017" --db Ecom 
+
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.brands brands.bson
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.carts carts.bson
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.categories categories.bson
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.orders orders.bson
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.products products.bson
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom.users users.bson
+
+mongorestore --uri "mongodb+srv://projectabhi9:abhi%401234@ecomcluster.hnwriqg.mongodb.net/Ecom" --nsInclude=Ecom dump\Ecom

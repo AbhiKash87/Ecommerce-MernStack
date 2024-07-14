@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 import { useEffect, useState } from 'react'
@@ -7,6 +8,8 @@ import { Link } from 'react-router-dom'
 import { nanoid } from 'nanoid'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductByIDAsync } from '../productSlice'
+import { addToCartAsync } from '../../Cart/cartSlice'
+import { discountedPrice } from '../../../app/constant'
 
 
 
@@ -37,39 +40,19 @@ export default function ProductDetails({product_id}) {
   const [selectedSize, setSelectedSize] = useState(sizes[0])
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
-  // const [product,setProduct] = useState({
-  //   id: "1",
-  //   title: "iPhone 9",
-  //   description: "An apple mobile which is nothing like apple",
-  //   price: 549,
-  //   discountPercentage: 12.96,
-  //   rating: 4.69,
-  //   stock: 94,
-  //   brand: "Apple",
-  //   category: "smartphones",
-  //   thumbnail: "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
-  //   images: [
-  //     "https://cdn.dummyjson.com/product-images/1/1.jpg",
-  //     "https://cdn.dummyjson.com/product-images/1/2.jpg",
-  //     "https://cdn.dummyjson.com/product-images/1/3.jpg",
-  //     "https://cdn.dummyjson.com/product-images/1/4.jpg",
-  //     "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-  //   ]
-  // });
-
-  // const fetchProductDetail= async()=>{
-  //   console.log("hi:",`http://localhost:8080/products/${product_id}`);
-  //   const response = await fetch(`http://localhost:8080/products/${product_id}`);
-  //   const data = await response.json();
-  //   // console.log(data);
-  //    setProduct(data);
-  // }
+  
+  const addToCartHandler = (e)=>{
+    e.preventDefault();
+    const newItem = {product:product.id,quantity:1};
+    dispatch(addToCartAsync(newItem));
+   
+  }
 
   useEffect(()=>{
     dispatch(fetchProductByIDAsync(product_id));
   },[product_id])
 
-  console.log(product);
+  
   return (
     <div className="bg-white">
      {(!product)?null: <div className="pt-6">
@@ -145,7 +128,8 @@ export default function ProductDetails({product_id}) {
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">${product.price}</p>
+            <p className="text-3xl tracking-tight text-gray-400 line-through">${product.price}</p>
+            <p className="text-3xl tracking-tight text-gray-900">${discountedPrice(product)}</p>
 
             {/* Reviews */}
             <div className="mt-6">
@@ -269,6 +253,9 @@ export default function ProductDetails({product_id}) {
 
             <Link to='/cart'>
             <button
+                onClick={(e)=>{
+                  addToCartHandler(e);
+                }}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

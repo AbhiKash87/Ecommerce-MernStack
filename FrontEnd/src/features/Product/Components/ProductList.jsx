@@ -17,17 +17,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllBrandsAsync,
   fetchAllCategoriesAsync,
-  fetchAllProductAsync,
   fetchProductByFilterAsync,
-  // fetchProductBySortAsync
 } from "../productSlice";
 import { nanoid } from "@reduxjs/toolkit";
-import { ITEMS_PER_PAGE } from "../../../app/constant";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constant";
+import Pagination from "../../../Components/Pagination";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order:"desc",current: false },
-  { name: "Price: Low to High", sort: "price", order:"asc",current: false },
-  { name: "Price: High to Low", sort: "price", order:"desc",current: false },
+  { name: "Price: Low to High", sort: "DiscountedPrice", order:"asc",current: false },
+  { name: "Price: High to Low", sort: "DiscountedPrice", order:"desc",current: false },
 ];
 
 
@@ -63,7 +62,7 @@ function ProductList() {
 
   useEffect(() => {
     const pagination = {_page:page,_per_page:ITEMS_PER_PAGE}
-    dispatch(fetchProductByFilterAsync({filter,sortOption,pagination}));
+    dispatch(fetchProductByFilterAsync({filter,sortOption,pagination,admin:false}));
   }, [filter,sortOption,page]);
 
   const filterHandler = (e, section, option) => {
@@ -83,12 +82,13 @@ function ProductList() {
 
   const sortHandler = async (option)=>{
 
-    let sortStr='';
-    if(option.order ==="desc" )
-      sortStr = `-${option.sort}`;
-    else
-      sortStr = option.sort;
-    const newSortOption = {...sortOption,_sort:sortStr};
+    // let sortStr='';
+    // if(option.order ==="desc" )
+    //   sortStr = `-${option.sort}`;
+    // else
+    //   sortStr = option.sort;
+
+    const newSortOption = {...sortOption,_sort:option.sort,_order:option.order};
     setsortOption(newSortOption);
   }
   const pageHandler = (e,page)=>{
@@ -222,7 +222,7 @@ function ProductList() {
                         </h3>
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
+                            { section.options &&  section.options.map((option, optionIdx) => (
                               <div
                                 key={option.value}
                                 className="flex items-center"
@@ -265,7 +265,7 @@ function ProductList() {
             </div>
           </section>
 
-         <Pagination page = {page} setPage = {setPage} pageHandler = {pageHandler} products={products}/>
+         <Pagination page = {page} setPage = {setPage} pageHandler = {pageHandler} totalItems={products.items}/>
         </main>
       </div>
     </div>
@@ -274,72 +274,10 @@ function ProductList() {
 
 export default ProductList;
 
-const Pagination = ({page,setPage,pageHandler,products })=>{
-  const totalItems = products.items;
-  
-  return (<div>
- <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-            <div className="flex flex-1 justify-between sm:hidden">
-              <div
-                onClick={()=>(page>1)?(setPage(page-1)):(setPage(page))}
-                className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Previous
-              </div>
-              <div
-                onClick={()=>(page<(totalItems/ITEMS_PER_PAGE))?setPage(page+1):setPage(page)}
-                className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Next
-              </div>
-            </div>
-            <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{((page-1)*ITEMS_PER_PAGE + 1)}</span> to{" "}
-                  <span className="font-medium">{((page)*ITEMS_PER_PAGE<totalItems)?(page)*ITEMS_PER_PAGE:totalItems}</span> of{" "}
-                  <span className="font-medium">{totalItems}</span> results
-                </p>
-              </div>
-              <div>
-                <nav
-                  className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                  aria-label="Pagination"
-                >
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                  >
-                    <span className="sr-only">Previous</span>
-                    <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" onClick={()=>(page>1)?(setPage(page-1)):(setPage(page))} />
-                  </a>
-                  {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-                  {Array.from({length:Math.ceil(totalItems/ITEMS_PER_PAGE)}).map((el,index)=>
-                  (
-                  <div
-                    key={nanoid()}
-                    onClick={e=>pageHandler(e,index+1)}
-                    aria-current="page"
-                    className= {`justify-center relative z-10 m-1 border-1 cursor-pointer border border-white inline-flex items-center ${(index+1)==page?`bg-indigo-600 text-white`:`text-black`} px-4 py-2 text-sm font-semibold focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                  >
-                    {index+1}
-                    </div>)
-                  )}
-                 
 
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-                  >
-                    <span className="sr-only">Next</span>
-                    <ChevronRightIcon className="h-5 w-5" aria-hidden="true" onClick={()=>(page<(totalItems/ITEMS_PER_PAGE))?setPage(page+1):setPage(page)}/>
-                  </a>
-                </nav>
-              </div>
-            </div>
-          </div>
-  </div>)
-}
+
+
+
 const MobileFilter=({sortHandler,filterHandler,setMobileFiltersOpen,mobileFiltersOpen,filters})=>{
   
   return (<div>
@@ -429,7 +367,7 @@ const MobileFilter=({sortHandler,filterHandler,setMobileFiltersOpen,mobileFilter
                             </h3>
                             <Disclosure.Panel className="pt-6">
                               <div className="space-y-6">
-                                {section.options.map((option, optionIdx) => (
+                                {section.options!=null && section.options.map((option, optionIdx) => (
                                   <div
                                     key={option.value}
                                     className="flex items-center"
@@ -479,10 +417,10 @@ const ProductGrid = ({products})=>{
         {(productArray)?(productArray.map((product) => (
           <div key={nanoid()} className="group relative">
             <Link to= {`/product-details/${product.id}`}>
-              <div>
+              <div className="border border-1 border-blue-200 p-2">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    src={product.images[0]}
+                    src={product.thumbnail}
                     alt={product.title}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
@@ -505,11 +443,7 @@ const ProductGrid = ({products})=>{
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">
-                      $
-                      {(
-                        product.price *
-                        (1 - product.discountPercentage / 100)
-                      ).toFixed(2)}
+                      ${discountedPrice(product)}
                     </p>
                     <p className="text-sm font-medium text-gray-400 line-through">
                       ${product.price}

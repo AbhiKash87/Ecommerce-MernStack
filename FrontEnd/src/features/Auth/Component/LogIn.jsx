@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {useForm} from 'react-hook-form'
+import { loginUserAync } from '../AuthSlice';
+import { fetchLoggedInUserAsync } from '../../User/userSlice';
 
 
 
@@ -11,8 +13,14 @@ import {useForm} from 'react-hook-form'
 function LogIn() {
     const dispatch = useDispatch();
     const {register,handleSubmit,watch,formState:{errors} } = useForm();
+    const userError = useSelector((state) => state.auth.error);
+    const userInfo = useSelector(state=>state.user.userInfo);
+
+
+
     return (
       <>
+          {userInfo && <Navigate to='/'></Navigate>}
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
@@ -26,7 +34,9 @@ function LogIn() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit((data)=>{
+              dispatch(loginUserAync(data));
+            })}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -34,7 +44,6 @@ function LogIn() {
                 <div className="mt-2">
                   <input
                     id="email"
-                    // name="email"
                     {...register("email")}
                     type="email"
                     autoComplete="email"
@@ -49,11 +58,7 @@ function LogIn() {
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
-                  </div>
+                  
                 </div>
                 <div className="mt-2">
                   <input
@@ -66,8 +71,27 @@ function LogIn() {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                  <div className="text-sm">
+                    <Link to='/Forget-Password' className="font-semibold text-indigo-600 hover:text-indigo-500">
+                      Forgot password?
+                    </Link>
+                  </div>
+                  {userError?(
+                    <div className="text-sm">
+                    <p  className="font-semibold text-red-600 hover:text-indigo-500">
+                     {userError.message}
+                    </p>
+                  </div>
+                  ):""}
+                  {userInfo?(
+                    <div className="text-sm">
+                    <p  className="font-semibold text-red-600 hover:text-indigo-500">
+                     {`you are loggen in as ${userInfo.email}`}
+                    </p>
+                  </div>
+                  ):""}
               </div>
-  
+            
               <div>
                 <button
                   type="submit"
@@ -80,7 +104,7 @@ function LogIn() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <Link to="/signin" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                 Create an Account
               </Link>
             </p>

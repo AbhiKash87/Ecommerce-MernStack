@@ -1,0 +1,122 @@
+[
+    {
+      "value": "smartphones",
+      "label": "smartphones",
+      "checked": false,
+      "id": "4a67"
+    },
+    {
+      "value": "laptops",
+      "label": "laptops",
+      "checked": false,
+      "id": "e108"
+    },
+    {
+      "value": "fragrances",
+      "label": "fragrances",
+      "checked": false,
+      "id": "d4d6"
+    },
+    {
+      "value": "skincare",
+      "label": "skincare",
+      "checked": false,
+      "id": "3e8d"
+    },
+    {
+      "value": "groceries",
+      "label": "groceries",
+      "checked": false,
+      "id": "76f5"
+    },
+    {
+      "value": "home-decoration",
+      "label": "home decoration",
+      "checked": false,
+      "id": "b412"
+    },
+    {
+      "value": "furniture",
+      "label": "furniture",
+      "checked": false,
+      "id": "4771"
+    },
+    {
+      "value": "tops",
+      "label": "tops",
+      "checked": false,
+      "id": "4718"
+    },
+    {
+      "value": "womens-dresses",
+      "label": "womens dresses",
+      "checked": false,
+      "id": "adc0"
+    },
+    {
+      "value": "womens-shoes",
+      "label": "womens shoes",
+      "checked": false,
+      "id": "b6af"
+    },
+    {
+      "value": "mens-shirts",
+      "label": "mens shirts",
+      "checked": false,
+      "id": "a204"
+    },
+    {
+      "value": "mens-shoes",
+      "label": "mens shoes",
+      "checked": false,
+      "id": "dee5"
+    },
+    {
+      "value": "mens-watches",
+      "label": "mens watches",
+      "checked": false,
+      "id": "9773"
+    },
+    {
+      "value": "womens-watches",
+      "label": "womens watches",
+      "checked": false,
+      "id": "3aab"
+    },
+    {
+      "value": "womens-bags",
+      "label": "womens bags",
+      "checked": false,
+      "id": "1396"
+    },
+    {
+      "value": "womens-jewellery",
+      "label": "womens jewellery",
+      "checked": false,
+      "id": "192e"
+    },
+    {
+      "value": "sunglasses",
+      "label": "sunglasses",
+      "checked": false,
+      "id": "d2e0"
+    },
+    {
+      "value": "automotive",
+      "label": "automotive",
+      "checked": false,
+      "id": "bfd9"
+    },
+    {
+      "value": "motorcycle",
+      "label": "motorcycle",
+      "checked": false,
+      "id": "8885"
+    },
+    {
+      "value": "lighting",
+      "label": "lighting",
+      "checked": false,
+      "id": "ebfb"
+    }
+  ]

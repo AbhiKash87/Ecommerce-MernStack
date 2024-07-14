@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState  } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const user = {
   name: 'Tom Cook',
@@ -11,16 +12,17 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Ganesh Traders', href: '/', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
+  { name: 'Ganesh Traders', link: '/', user: true, admin:false },
+  { name: 'Team', link: '#', user: true, admin:false  },
+  { name: 'Projects', link: '#', user: true, admin:false  },
+  { name: 'Admin', link: '/admin', user: false, admin:true  },
+  { name: 'Orders', link: '/admin/orders', user: false, admin:true  },
+  
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign In', href: '/login' },
+  { name: 'My Profile', link: '/profile' },
+  { name: 'My Orders', link: '/orders' },
+  { name: 'Settings', link: '#' },
 ]
 
 function classNames(...classes) {
@@ -29,6 +31,23 @@ function classNames(...classes) {
 
 
 function Navbar() {
+  const userInfo = useSelector((state)=>state.user.userInfo);
+  const items = useSelector((state)=>state.cart.items);
+  const [role,setRole] = useState('user');
+  
+  useEffect(()=>{
+    if(userInfo){
+
+      if(userInfo.role === 'admin')
+          setRole('admin');
+      else
+        setRole('user');
+      
+    }
+
+
+  },[userInfo])
+
   return (
     <>
      
@@ -49,9 +68,11 @@ function Navbar() {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
+                        <div key={item.name}>
+                          {item[role] && 
+                          
                           <Link
-                            key={item.name}
-                            to={item.href}
+                            to={item.link}
                             className={classNames(
                               item.current
                                 ? 'bg-gray-900 text-white'
@@ -62,6 +83,9 @@ function Navbar() {
                           >
                             {item.name}
                           </Link>
+                          }
+                        </div>
+                          
                         ))}
                       </div>
                     </div>
@@ -80,9 +104,11 @@ function Navbar() {
                         
                       </button>
                       </Link>
-                      <span className="inline-flex items-center rounded-full z-10 bg-red-50 px-2 py-1 -ml-3 text-xs font-medium mb-7 text-red-700 ring-1 ring-inset ring-red-600/10">
-                            3
-                      </span>
+                      {items.length>0 &&  (
+                        <span className="inline-flex items-center rounded-full z-10 bg-red-50 px-2 py-1 -ml-3 text-xs font-medium mb-7 text-red-700 ring-1 ring-inset ring-red-600/10">
+                           { items.length}
+                        </span>
+                      )}
 
 
                       {/* Profile dropdown */}
@@ -108,7 +134,7 @@ function Navbar() {
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <Link
-                                    to={item.href}
+                                    to={item.link}
                                     className={classNames(
                                       active ? 'bg-gray-100' : '',
                                       'block px-4 py-2 text-sm text-gray-700'
@@ -119,6 +145,37 @@ function Navbar() {
                                 )}
                               </Menu.Item>
                             ))}
+                            {
+                              userInfo?(
+                                <Menu.Item >
+                                {({ active }) => (
+                                  <Link
+                                    to='/logout'
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    Sign Out
+                                  </Link>
+                                )}
+                              </Menu.Item>
+                              ):(
+                                <Menu.Item >
+                                {({ active }) => (
+                                  <Link
+                                    to='/login'
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    Sign In
+                                  </Link>
+                                )}
+                              </Menu.Item>
+                              )
+                            }
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -145,7 +202,7 @@ function Navbar() {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={item.link}
                       className={classNames(
                         item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'
@@ -173,16 +230,18 @@ function Navbar() {
                       <span className="sr-only">View notifications</span>
                       <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
-                    <span className="inline-flex items-center rounded-full z-10 bg-red-50 px-2 py-1 -ml-3 text-xs font-medium mb-7 text-red-700 ring-1 ring-inset ring-red-600/10">
-                            3
-                      </span>
+                    {items.length>0 &&  (
+                        <span className="inline-flex items-center rounded-full z-10 bg-red-50 px-2 py-1 -ml-3 text-xs font-medium mb-7 text-red-700 ring-1 ring-inset ring-red-600/10">
+                           { items.length}
+                        </span>
+                      )}
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
                       <Disclosure.Button
                         key={item.name}
                         as="a"
-                        href={item.href}
+                        href={item.link}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         {item.name}
