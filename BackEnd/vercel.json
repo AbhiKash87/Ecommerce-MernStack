@@ -88,7 +88,7 @@
       },
      
       {
-        "src": "/*",
+        "src": "/(.*)",
         "dest": "dist/index.html"
       }
     ]
