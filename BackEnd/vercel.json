@@ -91,7 +91,7 @@
         "dest": "dist/$1"
       },
       {
-        "src": "*",
+        "src": "/*",
         "dest": "dist/index.html"
       }
     ]
