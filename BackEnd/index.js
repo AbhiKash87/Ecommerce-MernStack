@@ -87,6 +87,6 @@ app.post("/create-payment-intent", async (req, res) => {
 mongoose.connect(DBURI)
   .then(() => {
     console.log('Connected to MongoDB');
-    module.exports = app; // Export the Express app
   })
   .catch((err) => console.error('MongoDB connection error:', err));
+ module.exports = app; // Export the Express app
