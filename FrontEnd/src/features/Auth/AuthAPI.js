@@ -2,7 +2,7 @@
 /* eslint-disable no-async-promise-executor */
 export function signUp(userData) {
     return new Promise(async (resolve) => {
-      const response = await fetch(`http://localhost:8080/auth/signup`,{
+      const response = await fetch(`/auth/signup`,{
         method:'POST',
         body: JSON.stringify(userData),
         headers: {'content-type':'application/json'}
@@ -21,7 +21,7 @@ export function Login(loginInfo) {
   console.log("Login:",loginInfo)
     return new Promise(async (resolve,reject) => {
       try{
-        const response = await fetch(`http://localhost:8080/auth/login`,{
+        const response = await fetch(`/auth/login`,{
           method:'POST',
           body: JSON.stringify(loginInfo),
           headers: {'content-type':'application/json'}
