@@ -12,7 +12,7 @@ function UserOrders() {
     dispatch(fetchLoggedInUserOrderAsync());
 
     if (orders) {
-      console.log(orders);
+      // console.log(orders);
     }
   }, [dispatch]);
 

@@ -125,16 +125,16 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    console.log(1);
+    // console.log(1);
     // const checkIfToken = localStorage.getItem('token');
     if(token){
-      console.log(4)
+      // console.log(4)
       dispatch(fetchLoggedInUserAsync());
       dispatch(fetchAllCartItemsByUserIdAsync());
     }else{
       const checkIfToken = localStorage.getItem('token');
       if(checkIfToken){
-        console.log(2);
+        // console.log(2);
         dispatch(updateToken(checkIfToken));
       }
       dispatch(updateUserInfo())

@@ -6,6 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import "./Stripe.css";
 import { useSelector } from "react-redux";
+import { authFetch } from "../features/CustomApi/CustomFetch";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -18,7 +19,7 @@ export default function StripeCheckOut() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:8080/create-payment-intent", {
+    authFetch("/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ subTotal: currentOrder.subTotal, order_id: currentOrder.id })

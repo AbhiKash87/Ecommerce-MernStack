@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 
-import customFetch from "../CustomApi/CustomFetch";
+import {customFetch} from "../CustomApi/CustomFetch";
 
 /* eslint-disable no-async-promise-executor */
-export function fetchAllProduct() {
-  return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
+// export function fetchAllProduct() {
+//   return new Promise(async (resolve) => {
+//     const response = await fetch("http://localhost:8080/products");
+//     const data = await response.json();
+//     resolve({ data });
+//   });
+// }
 
 export function fetchProductByFilter({filter,sortOption,pagination}) {
   let queryString = "";

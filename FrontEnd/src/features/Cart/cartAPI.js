@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { useSelector } from "react-redux";
-import customFetch from "../CustomApi/CustomFetch";
+import {customFetch} from "../CustomApi/CustomFetch";
 
 /* eslint-disable no-async-promise-executor */
 export function addToCart(item) {
@@ -29,7 +29,7 @@ export function updateCart({ update }) {
       body: JSON.stringify(update),
       headers: { "content-type": "application/json"},
     });
-    console.log(response)
+    // console.log(response)
     const data = await response.json();
     //TODO on server it will only return releveant information
     resolve({ data });
