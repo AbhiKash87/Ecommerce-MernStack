@@ -21,7 +21,7 @@ exports.updateProductByID = async (req, res) => {
     try {
         const {id} = req.params;
         const savedProduct = await Product.findByIdAndUpdate(id,req.body,{new:true}); // Use await for promise
-        console.log("update request")
+        // console.log("update request")
         res.status(201).json(savedProduct);
     } catch (err) {
         console.error(err);

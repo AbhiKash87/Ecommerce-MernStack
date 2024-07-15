@@ -15,7 +15,7 @@ passport.use( new LocalStrategy( async (username, password, done)=>{
         }
         const isValid = await user.validatePassword(password);
         if (!isValid) {
-            console.log(isValid)
+            // console.log(isValid)
             return done(null, false, { message: 'Incorrect password.' });
         }
         
@@ -27,14 +27,14 @@ passport.use( new LocalStrategy( async (username, password, done)=>{
 }));
 
 passport.serializeUser((user, done) => {
-    console.log("serializeUser");
+    // console.log("serializeUser");
     done(null, {_id:user.id,email:user.email,name:user.name,role:user.role,addresses:user.addresses,orders:user.orders} );
 });
 
 // Deserialize user to retrieve from session
 passport.deserializeUser(async (id, done) => {
-    console.log("deserializeUser");
-    console.log(id);
+    // console.log("deserializeUser");
+    // console.log(id);
     
     try {
         let user = await User.findById(id);

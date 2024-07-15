@@ -10,8 +10,6 @@ function OrderSuccessPage() {
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-  const paymentIntent = queryParams.get('payment_intent');
-  const paymentIntentClientSecret = queryParams.get('payment_intent_client_secret');
   const redirectStatus = queryParams.get('redirect_status');
 
   // console.log(paymentIntent, paymentIntentClientSecret, redirectStatus);

@@ -11,7 +11,7 @@ const endpointSecret = process.env.endpointSecret;
 webhookRouter.post('/', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'];
     
-    // console.log("yha tak aa rha")
+    console.log("yha tak aa rha")
     let event;
   
     try {

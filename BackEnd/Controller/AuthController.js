@@ -17,11 +17,11 @@ exports.Signup = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email,password)
+  // console.log(email,password)
   try {
     const user = await User.findOne({ email });
 
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -57,7 +57,7 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.checkUser = async (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
   try {
     res.status(200).json({ success: true, user: SanitizedUser(req.user) });
   } catch (err) {

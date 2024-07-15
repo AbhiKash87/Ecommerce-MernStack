@@ -1,5 +1,5 @@
 const SanitizedUser = (user) => {
-  console.log("sanitized");
+  // console.log("sanitized");
   return {
     id: user.id,
     email: user.email,
