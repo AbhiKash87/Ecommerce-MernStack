@@ -6,6 +6,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -47,6 +48,8 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
+  // const [redirectToOrderSuccess, setRedirectToOrderSuccess] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,7 +67,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `http://localhost:5173/order-success/${currentOrder.id}`,
+        return_url: `http://localhost:8080/order-success/${currentOrder.id}`,
       },
     });
 
@@ -86,10 +89,11 @@ export default function CheckoutForm() {
   const paymentElementOptions = {
     layout: "tabs"
   }
-
+  
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-
+      {/* {redirectToOrderSuccess && <Navigate to={`/order-success/${currentOrder.id}`}></Navigate>} */}
+     
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">

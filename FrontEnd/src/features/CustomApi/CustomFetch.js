@@ -7,7 +7,7 @@ const customFetch = async (url, options = {}) => {
         };
     }
 
-    const apiEndPoint = 'http://localhost:8080';
+    const apiEndPoint = '';
     const response = await fetch(apiEndPoint + url, options);
 
     if (response.status === 401) {
@@ -20,7 +20,7 @@ const customFetch = async (url, options = {}) => {
 };
 
 const authFetch = async (url, options = {}) => {
-    const apiEndPoint = 'http://localhost:8080';
+    const apiEndPoint = '';
     const response = await fetch(apiEndPoint + url, options);
 
     return response;

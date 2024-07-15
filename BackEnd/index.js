@@ -42,10 +42,10 @@ app.use('/cart', ensureAuthenticated(), cartRouters.router);
 app.use('/order', ensureAuthenticated(), orderRouters.router);
 
 // Serve React build
-// app.use(express.static(path.join(__dirname, 'dist')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Stripe API setup
 const stripe = require("stripe")(process.env.stripe_server_key);

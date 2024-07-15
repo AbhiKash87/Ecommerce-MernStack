@@ -27,7 +27,7 @@ webhookRouter.post('/', express.raw({type: 'application/json'}), (request, respo
       case 'payment_intent.succeeded':
         const paymentIntentSucceeded = event.data.object;
         const order_id = paymentIntentSucceeded.metadata.order_id;
-        // console.log("paymentSuccessfull:",order_id)
+        console.log("paymentSuccessfull:")
         break;
       // ... handle other event types
       default:
