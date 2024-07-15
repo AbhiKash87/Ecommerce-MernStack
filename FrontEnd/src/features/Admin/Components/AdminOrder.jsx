@@ -25,7 +25,7 @@ function AdminOrder() {
  
   const orderEdit = (order,e)=>{
     const newOrder = {...order,status:e.target.value};
-    console.log(newOrder);
+    // console.log(newOrder);
     dispatch( updateOrderAsync(newOrder));
     setEditableOrderId(-1);
   }

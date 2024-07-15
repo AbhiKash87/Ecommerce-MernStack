@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const signUpAsync = createAsyncThunk(
-  "auth/createUser",
+  "auth/signUp",
   async (userData) => {
     
     const response = await signUp(userData);
@@ -20,7 +20,7 @@ export const signUpAsync = createAsyncThunk(
   }
 );
 export const loginUserAync = createAsyncThunk(
-  "auth/checkUser",
+  "auth/Login",
   async (loginInfo,{rejectWithValue}) => {
     
    try{
@@ -56,7 +56,7 @@ export const authSlice = createSlice({
       state.value += 1;
     },
     updateToken: (state,token) => {
-      console.log(3)
+      // console.log(3)
       state.loggedINUserToken = token;
       state.isProtected = true;
     },

@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-async-promise-executor */
+import {authFetch}  from "../CustomApi/CustomFetch";
+
 export function signUp(userData) {
     return new Promise(async (resolve) => {
-      const response = await fetch(`/auth/signup`,{
+      const response = await authFetch(`/auth/signup`,{
         method:'POST',
         body: JSON.stringify(userData),
         headers: {'content-type':'application/json'}
@@ -11,17 +13,17 @@ export function signUp(userData) {
      
       const data = await response.json();
       //TODO on server it will only return releveant information
-      console.log(data)
+      // console.log(data)
       resolve({ data });
     });
   }
 
 export function Login(loginInfo) {
 
-  console.log("Login:",loginInfo)
+  
     return new Promise(async (resolve,reject) => {
       try{
-        const response = await fetch(`/auth/login`,{
+        const response = await authFetch(`/auth/login`,{
           method:'POST',
           body: JSON.stringify(loginInfo),
           headers: {'content-type':'application/json'}

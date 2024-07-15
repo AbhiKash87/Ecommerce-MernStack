@@ -1,15 +1,14 @@
 /* eslint-disable no-async-promise-executor */
 
-import customFetch from "../CustomApi/CustomFetch";
+import {customFetch} from "../CustomApi/CustomFetch";
 
 export function createOrder(newOrder) {
   
   return new Promise(async (resolve) => {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`http://localhost:8080/order`,{
+    const response = await customFetch(`/order`,{
       method:'POST',
       body: JSON.stringify(newOrder),
-      headers: {'content-type':'application/json',Authorization: token}
+      headers: {'content-type':'application/json'}
     });
     
     const data = await response.json();

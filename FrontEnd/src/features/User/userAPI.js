@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
-import customFetch from "../CustomApi/CustomFetch";
+import {customFetch} from "../CustomApi/CustomFetch";
 
 /* eslint-disable no-async-promise-executor */
 export function fetchLoggedInUserOrder() {
     
     return new Promise(async (resolve) => {
       
-      const response = await customFetch(`http://localhost:8080/order/user`);
+      const response = await customFetch(`/order/user`);
       
       const data = await response.json();
       resolve({ data });

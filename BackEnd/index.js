@@ -15,6 +15,7 @@ const userRouters = require('./routes/UserRoutes');
 const authRouters = require('./routes/AuthRoutes');
 const cartRouters = require('./routes/CartRoutes');
 const orderRouters = require('./routes/OrderRoutes');
+const webhookRouters = require('./routes/WebhookRoutes');
 const ensureAuthenticated = require('./Middlewares/Ensureauthenticated');
 const path = require('path');
 
@@ -25,7 +26,8 @@ const DBURI = process.env.DBURI;
 
 //middlewares
 app.use(cors()); // Enable CORS for all routes
-const endpointSecret = process.env.endpointSecret;
+
+app.use('/webhook', webhookRouters.router);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
@@ -40,10 +42,10 @@ app.use('/cart', ensureAuthenticated(), cartRouters.router);
 app.use('/order', ensureAuthenticated(), orderRouters.router);
 
 // Serve React build
-app.use(express.static(path.join(__dirname, 'dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'dist')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 // Stripe API setup
 const stripe = require("stripe")(process.env.stripe_server_key);
@@ -90,5 +92,8 @@ mongoose.connect(DBURI)
   })
   .catch((err) => console.error('MongoDB connection error:', err));
 
-app.listen(port);
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+}
+);
 //  module.exports = app; // Export the Express app

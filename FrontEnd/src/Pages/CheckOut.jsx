@@ -114,7 +114,7 @@ export default function CheckOut() {
             <form
               noValidate
               onSubmit={handleSubmit((data) => {
-                console.log(data);
+                // console.log(data);
                 dispatch(
                   updateUserAsync({
                     ...userInfo,

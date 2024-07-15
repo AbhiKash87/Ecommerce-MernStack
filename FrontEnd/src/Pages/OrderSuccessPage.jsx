@@ -14,7 +14,7 @@ function OrderSuccessPage() {
   const paymentIntentClientSecret = queryParams.get('payment_intent_client_secret');
   const redirectStatus = queryParams.get('redirect_status');
 
-  console.log(paymentIntent, paymentIntentClientSecret, redirectStatus);
+  // console.log(paymentIntent, paymentIntentClientSecret, redirectStatus);
 
   const dispatch = useDispatch();
 

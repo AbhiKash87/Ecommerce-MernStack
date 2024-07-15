@@ -1,26 +1,30 @@
-
 const customFetch = async (url, options = {}) => {
-    
-
     const token = localStorage.getItem('token');
     if (token) {
         options.headers = {
-        ...options.headers,
-        Authorization: token,
-      };
+            ...options.headers,
+            Authorization: token,
+        };
     }
 
-    const apiEndPoint = 'http://localhost:8080'
-    const response = await fetch(apiEndPoint+url, options);
-    
-    if (response.status === 401){
+    const apiEndPoint = 'http://localhost:8080';
+    const response = await fetch(apiEndPoint + url, options);
 
-        console.log("error: 401")
+    if (response.status === 401) {
+        console.log("error: 401");
         window.localStorage.clear();
-        window.location.href = './'
+        window.location.href = './';
         throw new Error('Unauthorized access. Please log in.');
     }
     return response;
 };
 
-export default customFetch;
+const authFetch = async (url, options = {}) => {
+    const apiEndPoint = 'http://localhost:8080';
+    const response = await fetch(apiEndPoint + url, options);
+
+    return response;
+};
+
+// Named exports
+export { customFetch, authFetch };

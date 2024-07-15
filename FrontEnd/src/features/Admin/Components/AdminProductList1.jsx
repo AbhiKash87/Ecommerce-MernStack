@@ -56,7 +56,7 @@ function AdminProductList() {
     },
   ];
 
-  console.log("Admin product list");
+  // console.log("Admin product list");
   useEffect(() => {
     const pagination = { _page: page, _per_page: ITEMS_PER_PAGE };
     dispatch(fetchProductByFilterAsync({ filter, sortOption, pagination }));
