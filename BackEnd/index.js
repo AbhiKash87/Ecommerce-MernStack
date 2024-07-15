@@ -20,7 +20,7 @@ const path = require('path');
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT;
+const port = process.env.PORT || 5173;
 const DBURI = process.env.DBURI;
 
 //middlewares
@@ -89,4 +89,6 @@ mongoose.connect(DBURI)
     console.log('Connected to MongoDB');
   })
   .catch((err) => console.error('MongoDB connection error:', err));
- module.exports = app; // Export the Express app
+
+app.listen(port);
+//  module.exports = app; // Export the Express app
