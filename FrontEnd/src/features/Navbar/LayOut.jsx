@@ -5,11 +5,11 @@ import {Footer} from './Footer'
 
 function LayOut() {
   return (
-    <>
+    <div className='w-full'>
     <Navbar/>
     <Outlet/>
     <Footer/>
-    </>
+    </div>
   )
 }
 
